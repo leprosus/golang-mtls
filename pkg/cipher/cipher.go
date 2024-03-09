@@ -13,12 +13,14 @@ type Cipher struct {
 
 func NewCipher(shared []byte) (c *Cipher, err error) {
 	var block cipher.Block
+
 	block, err = aes.NewCipher(shared)
 	if err != nil {
 		return nil, err
 	}
 
 	var gcm cipher.AEAD
+
 	gcm, err = cipher.NewGCM(block)
 	if err != nil {
 		return nil, err
@@ -29,6 +31,7 @@ func NewCipher(shared []byte) (c *Cipher, err error) {
 
 func (c Cipher) Encode(src []byte) (dst []byte, err error) {
 	nonce := make([]byte, c.gcm.NonceSize())
+
 	_, err = io.ReadFull(rand.Reader, nonce)
 	if err != nil {
 		return nil, err

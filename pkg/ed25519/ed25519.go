@@ -66,6 +66,7 @@ func GeneratePemFiles(dirPath, baseName string) (err error) {
 		pubPem  pem.Block
 		privPem pem.Block
 	)
+
 	pubPem, privPem, err = GeneratePemBlocks()
 	if err != nil {
 		return err
@@ -78,12 +79,16 @@ func GeneratePemFiles(dirPath, baseName string) (err error) {
 
 	fileName := filepath.Join(dirPath, baseName)
 
-	err = os.WriteFile(fileName+".pub", pem.EncodeToMemory(&pubPem), 0o644)
+	const pubPerm = 0o644
+
+	err = os.WriteFile(fileName+".pub", pem.EncodeToMemory(&pubPem), pubPerm)
 	if err != nil {
 		return err
 	}
 
-	err = os.WriteFile(fileName, pem.EncodeToMemory(&privPem), 0o600)
+	const privPerm = 0o600
+
+	err = os.WriteFile(fileName, pem.EncodeToMemory(&privPem), privPerm)
 	if err != nil {
 		return err
 	}
