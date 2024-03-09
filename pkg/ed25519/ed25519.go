@@ -78,12 +78,12 @@ func GeneratePemFiles(dirPath, baseName string) (err error) {
 
 	fileName := filepath.Join(dirPath, baseName)
 
-	err = os.WriteFile(fileName+".pub", pem.EncodeToMemory(&pubPem), 0644)
+	err = os.WriteFile(fileName+".pub", pem.EncodeToMemory(&pubPem), 0o644)
 	if err != nil {
 		return err
 	}
 
-	err = os.WriteFile(fileName, pem.EncodeToMemory(&privPem), 0600)
+	err = os.WriteFile(fileName, pem.EncodeToMemory(&privPem), 0o600)
 	if err != nil {
 		return err
 	}

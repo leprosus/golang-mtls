@@ -1,9 +1,10 @@
 package cipher
 
 import (
+	"testing"
+
 	"mtls/pkg/curve25519"
 	"mtls/pkg/ed25519"
-	"testing"
 )
 
 func provideCipher() (cipher *Cipher, err error) {

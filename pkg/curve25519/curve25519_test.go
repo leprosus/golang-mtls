@@ -3,8 +3,9 @@ package curve25519
 import (
 	"bytes"
 	. "crypto/ed25519"
-	"mtls/pkg/ed25519"
 	"testing"
+
+	"mtls/pkg/ed25519"
 )
 
 func TestGenerateSharedKey(t *testing.T) {
