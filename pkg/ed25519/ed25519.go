@@ -19,15 +19,15 @@ func GenerateKeyPair() (pub ed25519.PublicKey, priv ed25519.PrivateKey, err erro
 func ConvKeyPairToBytesPair(pub ed25519.PublicKey, priv ed25519.PrivateKey) (pubBs, privBs []byte, err error) {
 	pubBs, err = x509.MarshalPKIXPublicKey(pub)
 	if err != nil {
-		return nil, nil, err
+		return pubBs, privBs, err
 	}
 
 	privBs, err = x509.MarshalPKCS8PrivateKey(priv)
 	if err != nil {
-		return nil, nil, err
+		return pubBs, privBs, err
 	}
 
-	return pubBs, privBs, err
+	return pubBs, privBs, nil
 }
 
 func GenerateBytesPair() (pubBs, privBs []byte, err error) {
@@ -82,7 +82,7 @@ func GeneratePemBytesPair() (pubBs, privBs []byte, err error) {
 
 	pubPem, privPem, err = GeneratePemBlockPair()
 	if err != nil {
-		return nil, nil, err
+		return pubBs, privBs, err
 	}
 
 	pubBs = pem.EncodeToMemory(&pubPem)
@@ -100,10 +100,8 @@ func GeneratePemFiles(dirPath, baseName string) (err error) {
 
 	fileName := filepath.Join(dirPath, baseName)
 
-	var (
-		pubBs,
+	var pubBs,
 		privBs []byte
-	)
 
 	pubBs, privBs, err = GeneratePemBytesPair()
 	if err != nil {
@@ -132,24 +130,24 @@ func ParsePemBlockPair(pubPem, privPem pem.Block) (pub ed25519.PublicKey, priv e
 
 	parsed, err = x509.ParsePKIXPublicKey(pubPem.Bytes)
 	if err != nil {
-		return nil, nil, err
+		return pub, priv, err
 	}
 
 	var ok bool
 
 	pub, ok = parsed.(ed25519.PublicKey)
 	if !ok {
-		return nil, nil, ErrImpossibleToParseBytesToEd25519
+		return pub, priv, ErrImpossibleToParseBytesToEd25519
 	}
 
 	parsed, err = x509.ParsePKCS8PrivateKey(privPem.Bytes)
 	if err != nil {
-		return nil, nil, err
+		return pub, priv, err
 	}
 
 	priv, ok = parsed.(ed25519.PrivateKey)
 	if !ok {
-		return nil, nil, ErrImpossibleToParseBytesToEd25519
+		return pub, priv, ErrImpossibleToParseBytesToEd25519
 	}
 
 	return pub, priv, err
