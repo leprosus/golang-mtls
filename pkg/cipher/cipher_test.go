@@ -1,9 +1,9 @@
 package cipher_test
 
 import (
-	"mtls/pkg/cipher"
 	"testing"
 
+	"mtls/pkg/cipher"
 	"mtls/pkg/curve25519"
 	"mtls/pkg/ed25519"
 )

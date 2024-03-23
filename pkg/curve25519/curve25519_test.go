@@ -3,9 +3,9 @@ package curve25519_test
 import (
 	"bytes"
 	"crypto/ed25519"
-	"mtls/pkg/curve25519"
 	"testing"
 
+	"mtls/pkg/curve25519"
 	mtlsEd25519 "mtls/pkg/ed25519"
 )
 

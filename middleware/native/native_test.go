@@ -4,12 +4,12 @@ import (
 	"bytes"
 	"io"
 	"log/slog"
-	"mtls/middleware/native"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	. "mtls/middleware"
+	"mtls/middleware"
+	"mtls/middleware/native"
 	"mtls/mtls"
 	"mtls/pkg/ed25519"
 )
@@ -72,15 +72,15 @@ func TestMTLS(t *testing.T) {
 	}
 
 	req := httptest.NewRequest(http.MethodPost, "/", bytes.NewReader(encoded))
-	req.Header.Add(MTLSSignHeader, bobMTLS.Sign())
+	req.Header.Add(middleware.MTLSSignHeader, bobMTLS.Sign())
 
 	rec := httptest.NewRecorder()
 
 	mux := &nullMux{}
 	log := slog.Default()
 
-	middleware := native.NewMTLS(mux, log, aliceMTLS)
-	middleware.ServeHTTP(rec, req)
+	testMiddleware := native.NewMTLS(mux, log, aliceMTLS)
+	testMiddleware.ServeHTTP(rec, req)
 
 	res := rec.Result()
 	if res.StatusCode != http.StatusOK {

@@ -1,8 +1,9 @@
 package ed25519_test
 
 import (
-	"mtls/pkg/ed25519"
 	"testing"
+
+	"mtls/pkg/ed25519"
 )
 
 func TestGenerateKeyPair(t *testing.T) {
