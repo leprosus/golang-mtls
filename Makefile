@@ -1,5 +1,6 @@
 lint:
+	gofumpt -l -w .
 	golangci-lint --color always run
 
-gofumpt-all:
+gofumpt:
 	gofumpt -l -w .
