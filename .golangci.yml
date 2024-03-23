@@ -23,6 +23,7 @@ linters:
     - exhaustruct
     - nonamedreturns
     - wrapcheck
+    - gofumpt
 
 linters-settings:
   gosec:
