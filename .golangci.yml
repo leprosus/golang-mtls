@@ -4,6 +4,8 @@ run:
   tests: true
   modules-download-mode: mod
   allow-parallel-runners: true
+  max-issues-per-linter: 0
+  max-same-issues: 0
   skip-files:
     - ".*\\_test\\.go$"
 linters:
