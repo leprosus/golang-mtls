@@ -1,34 +1,38 @@
-package cipher
+package cipher_test
 
 import (
+	"mtls/pkg/cipher"
 	"testing"
 
 	"mtls/pkg/curve25519"
 	"mtls/pkg/ed25519"
 )
 
-func provideCipher() (cipher *Cipher, err error) {
+func provideCipher() (c *cipher.Cipher, err error) {
 	pub, priv, err := ed25519.GenerateKeyPair()
 	if err != nil {
 		return nil, err
 	}
 
 	var shared []byte
+
 	shared, err = curve25519.GenerateSharedKey(pub, priv)
 	if err != nil {
 		return nil, err
 	}
 
-	cipher, err = NewCipher(shared)
+	c, err = cipher.NewCipher(shared)
 	if err != nil {
 		return nil, err
 	}
 
-	return cipher, nil
+	return c, nil
 }
 
 func TestCipher(t *testing.T) {
-	cipher, err := provideCipher()
+	t.Parallel()
+
+	testCipher, err := provideCipher()
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -36,13 +40,15 @@ func TestCipher(t *testing.T) {
 	origin := []byte("a special secret message")
 
 	var encoded []byte
-	encoded, err = cipher.Encode(origin)
+
+	encoded, err = testCipher.Encode(origin)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
 
 	var decoded []byte
-	decoded, err = cipher.Decode(encoded)
+
+	decoded, err = testCipher.Decode(encoded)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -53,15 +59,15 @@ func TestCipher(t *testing.T) {
 }
 
 func BenchmarkCipherEncode(b *testing.B) {
-	cipher, err := provideCipher()
+	testCipher, err := provideCipher()
 	if err != nil {
 		b.Fatal(err.Error())
 	}
 
 	origin := []byte("a special secret message")
 
-	for i := 0; i < b.N; i++ {
-		_, err = cipher.Encode(origin)
+	for range b.N {
+		_, err = testCipher.Encode(origin)
 		if err != nil {
 			b.Fatal(err.Error())
 		}
@@ -71,19 +77,20 @@ func BenchmarkCipherEncode(b *testing.B) {
 func BenchmarkCipherDecode(b *testing.B) {
 	origin := []byte("a special secret message")
 
-	cipher, err := provideCipher()
+	testCipher, err := provideCipher()
 	if err != nil {
 		b.Fatal(err.Error())
 	}
 
 	var encoded []byte
-	encoded, err = cipher.Encode(origin)
+
+	encoded, err = testCipher.Encode(origin)
 	if err != nil {
 		b.Fatal(err.Error())
 	}
 
-	for i := 0; i < b.N; i++ {
-		_, err = cipher.Decode(encoded)
+	for range b.N {
+		_, err = testCipher.Decode(encoded)
 		if err != nil {
 			b.Fatal(err.Error())
 		}

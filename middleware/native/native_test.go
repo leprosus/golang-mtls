@@ -1,15 +1,17 @@
-package native
+package native_test
 
 import (
 	"bytes"
 	"io"
 	"log/slog"
-	. "mtls/middleware"
-	"mtls/mtls"
-	"mtls/pkg/ed25519"
+	"mtls/middleware/native"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	. "mtls/middleware"
+	"mtls/mtls"
+	"mtls/pkg/ed25519"
 )
 
 type nullMux struct{}
@@ -30,7 +32,9 @@ func (n nullMux) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	}
 }
 
-func TestMTLS(t *testing.T) {
+func initMTLS(t *testing.T) (aliceMTLS, bobMTLS *mtls.MTLS) {
+	t.Helper()
+
 	alicePub, alicePriv, err := ed25519.GeneratePemBytesPair()
 	if err != nil {
 		t.Fatal(err)
@@ -41,22 +45,28 @@ func TestMTLS(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	var aliceMTLS *mtls.MTLS
 	aliceMTLS, err = mtls.NewMTLS(bobPub, alicePriv)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	var bobMTLS *mtls.MTLS
 	bobMTLS, err = mtls.NewMTLS(alicePub, bobPriv)
 	if err != nil {
 		t.Fatal(err)
 	}
 
+	return aliceMTLS, bobMTLS
+}
+
+func TestMTLS(t *testing.T) {
+	t.Parallel()
+
+	var aliceMTLS, bobMTLS *mtls.MTLS
+	aliceMTLS, bobMTLS = initMTLS(t)
+
 	const original = "test text"
 
-	var encoded []byte
-	encoded, err = bobMTLS.Encode([]byte(original))
+	encoded, err := bobMTLS.Encode([]byte(original))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -69,7 +79,7 @@ func TestMTLS(t *testing.T) {
 	mux := &nullMux{}
 	log := slog.Default()
 
-	middleware := NewMTLS(mux, log, aliceMTLS)
+	middleware := native.NewMTLS(mux, log, aliceMTLS)
 	middleware.ServeHTTP(rec, req)
 
 	res := rec.Result()
@@ -78,6 +88,7 @@ func TestMTLS(t *testing.T) {
 	}
 
 	var bs []byte
+
 	bs, err = io.ReadAll(res.Body)
 	if err != nil {
 		t.Fatal(err)

@@ -6,8 +6,7 @@ run:
   allow-parallel-runners: true
   max-issues-per-linter: 0
   max-same-issues: 0
-  skip-files:
-    - ".*\\_test\\.go$"
+
 linters:
   enable-all: true
   disable:
@@ -55,6 +54,7 @@ linters-settings:
   varnamelen:
     ignore-names:
       - ok
+      - bs
 
 issues:
   exclude-rules:

@@ -4,14 +4,15 @@ import (
 	"crypto/ed25519"
 	"crypto/sha512"
 	"encoding/hex"
-	. "mtls/pkg/cipher"
-	. "mtls/pkg/curve25519"
-	. "mtls/pkg/ed25519"
 	"strings"
+
+	"mtls/pkg/cipher"
+	"mtls/pkg/curve25519"
+	mtlsEd25519 "mtls/pkg/ed25519"
 )
 
 type MTLS struct {
-	cipher *Cipher
+	cipher *cipher.Cipher
 	sign   string
 }
 
@@ -23,19 +24,21 @@ func NewMTLS(pubBs, privBs []byte) (mtls *MTLS, err error) {
 		priv ed25519.PrivateKey
 	)
 
-	pub, priv, err = ParsePemBytesPair(pubBs, privBs)
+	pub, priv, err = mtlsEd25519.ParsePemBytesPair(pubBs, privBs)
 	if err != nil {
 		return mtls, err
 	}
 
 	var shared []byte
-	shared, err = GenerateSharedKey(pub, priv)
+
+	shared, err = curve25519.GenerateSharedKey(pub, priv)
 	if err != nil {
 		return mtls, err
 	}
 
 	mtls = &MTLS{}
-	mtls.cipher, err = NewCipher(shared)
+
+	mtls.cipher, err = cipher.NewCipher(shared)
 	if err != nil {
 		return mtls, err
 	}
@@ -50,9 +53,9 @@ func NewMTLS(pubBs, privBs []byte) (mtls *MTLS, err error) {
 		diff := SignLength - hashLen
 		padding := strings.Repeat("0", diff)
 
-		mtls.sign = padding + string(hashStr)
+		mtls.sign = padding + hashStr
 	} else {
-		mtls.sign = string(hashStr[0:SignLength])
+		mtls.sign = hashStr[0:SignLength]
 	}
 
 	return mtls, nil

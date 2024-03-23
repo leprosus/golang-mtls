@@ -4,9 +4,10 @@ import (
 	"bytes"
 	"io"
 	"log/slog"
+	"net/http"
+
 	"mtls/middleware"
 	"mtls/mtls"
-	"net/http"
 )
 
 type MTLS struct {
@@ -68,6 +69,7 @@ func (m *MTLS) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	}
 
 	reader := io.LimitReader(req.Body, int64(m.bodySizeLimit))
+
 	bs, err := io.ReadAll(reader)
 	if err != nil {
 		res.WriteHeader(http.StatusRequestEntityTooLarge)
@@ -79,6 +81,7 @@ func (m *MTLS) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	}
 
 	var decoded []byte
+
 	decoded, err = m.mtls.Decode(bs)
 	if err != nil {
 		res.WriteHeader(http.StatusBadRequest)

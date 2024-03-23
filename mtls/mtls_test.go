@@ -1,11 +1,15 @@
-package mtls
+package mtls_test
 
 import (
-	"mtls/pkg/ed25519"
 	"testing"
+
+	"mtls/mtls"
+	"mtls/pkg/ed25519"
 )
 
 func TestMTL(t *testing.T) {
+	t.Parallel()
+
 	alicePub, alicePriv, err := ed25519.GeneratePemBytesPair()
 	if err != nil {
 		t.Fatal(err)
@@ -16,14 +20,16 @@ func TestMTL(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	var aliceMTLS *MTLS
-	aliceMTLS, err = NewMTLS(bobPub, alicePriv)
+	var aliceMTLS *mtls.MTLS
+
+	aliceMTLS, err = mtls.NewMTLS(bobPub, alicePriv)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	var bobMTLS *MTLS
-	bobMTLS, err = NewMTLS(alicePub, bobPriv)
+	var bobMTLS *mtls.MTLS
+
+	bobMTLS, err = mtls.NewMTLS(alicePub, bobPriv)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -35,12 +41,14 @@ func TestMTL(t *testing.T) {
 	const original = "test text"
 
 	var encoded []byte
+
 	encoded, err = aliceMTLS.Encode([]byte(original))
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	var decoded []byte
+
 	decoded, err = bobMTLS.Decode(encoded)
 	if err != nil {
 		t.Fatal(err)
