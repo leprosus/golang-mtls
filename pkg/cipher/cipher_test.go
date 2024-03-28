@@ -1,22 +1,27 @@
 package cipher_test
 
 import (
+	"mtls/pkg/ed25519/domain"
 	"testing"
 
 	"mtls/pkg/cipher"
-	"mtls/pkg/curve25519"
 	"mtls/pkg/ed25519"
 )
 
 func provideCipher() (c *cipher.Cipher, err error) {
-	pub, priv, err := ed25519.GenerateKeyPair()
+	var (
+		pub  domain.PublicKey
+		priv domain.PrivateKey
+	)
+
+	pub, priv, err = ed25519.GenerateKeyPair()
 	if err != nil {
 		return nil, err
 	}
 
-	var shared []byte
+	var shared domain.SharedKey
 
-	shared, err = curve25519.GenerateSharedKey(pub, priv)
+	shared, err = ed25519.GenerateSharedKey(pub, priv)
 	if err != nil {
 		return nil, err
 	}
