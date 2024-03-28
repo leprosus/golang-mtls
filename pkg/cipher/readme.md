@@ -17,7 +17,7 @@ func NewCipher(key []byte) (c *Cipher, err error)
 
 ```golang
 type Cipher struct {
-gcm cipher.AEAD
+    gcm cipher.AEAD
 }
 ```
 

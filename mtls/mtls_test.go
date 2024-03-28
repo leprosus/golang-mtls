@@ -1,21 +1,51 @@
 package mtls_test
 
 import (
+	"mtls/pkg/ed25519/domain"
 	"testing"
 
 	"mtls/mtls"
 	"mtls/pkg/ed25519"
 )
 
+func generatePEMPair() (pubPEMBs, privPEMBs []byte, err error) {
+	var (
+		pub  domain.PublicKey
+		priv domain.PrivateKey
+	)
+
+	pub, priv, err = ed25519.GenerateKeyPair()
+	if err != nil {
+		return pubPEMBs, privPEMBs, err
+	}
+
+	var pubPEM, privPEM domain.PEMBlock
+
+	pubPEM, err = pub.ToPEMBlock()
+	if err != nil {
+		return pubPEMBs, privPEMBs, err
+	}
+
+	privPEM, err = priv.ToPEMBlock()
+	if err != nil {
+		return pubPEMBs, privPEMBs, err
+	}
+
+	pubPEMBs = pubPEM.ToBytes()
+	privPEMBs = privPEM.ToBytes()
+
+	return pubPEMBs, privPEMBs, nil
+}
+
 func TestMTL(t *testing.T) {
 	t.Parallel()
 
-	alicePub, alicePriv, err := ed25519.GeneratePemBytesPair()
+	alicePub, alicePriv, err := generatePEMPair()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	bobPub, bobPriv, err := ed25519.GeneratePemBytesPair()
+	bobPub, bobPriv, err := generatePEMPair()
 	if err != nil {
 		t.Fatal(err)
 	}
