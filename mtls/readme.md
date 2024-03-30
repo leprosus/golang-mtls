@@ -48,6 +48,12 @@ func (m MTLS) Sign() (sign string)
 
 Метод возвращает 6 символьный признак секретного ключа.
 
+```golang
+func (m MTLS) Cipher() (cipher *cipher.Cipher)
+```
+
+Метод возвращает используемый в MTLS шифровальщик.
+
 # Пример использования
 
 ```golang

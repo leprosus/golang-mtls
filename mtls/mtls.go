@@ -73,3 +73,7 @@ func (m MTLS) Decode(src []byte) (dst []byte, err error) {
 func (m MTLS) Sign() (sign string) {
 	return m.sign
 }
+
+func (m MTLS) Cipher() (cipher *cipher.Cipher) {
+	return m.cipher
+}
