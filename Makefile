@@ -1,5 +1,4 @@
-lint:
-	gofumpt -l -w .
+lint: gofumpt
 	golangci-lint --color always run
 
 gofumpt:
