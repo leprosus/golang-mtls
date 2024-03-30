@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"io"
 	"log/slog"
+	"mtls/pkg/ed25519/domain"
 	"net/http"
 
 	"mtls/middleware"
@@ -57,7 +58,7 @@ func (m *MTLS) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 		slog.String("method", req.Method),
 		slog.String("path", req.RequestURI))
 
-	isValidSign := signLen == mtls.SignLength && sign == m.mtls.Sign()
+	isValidSign := signLen == domain.SignLength && sign == m.mtls.Sign()
 	if !isValidSign {
 		res.WriteHeader(http.StatusUnauthorized)
 
@@ -97,5 +98,7 @@ func (m *MTLS) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	req.Body = io.NopCloser(bytes.NewReader(decoded))
 	req.ContentLength = int64(len(decoded))
 
-	m.mux.ServeHTTP(res, req)
+	rw := newResponseWriter(m.mtls, res, log)
+
+	m.mux.ServeHTTP(rw, req)
 }

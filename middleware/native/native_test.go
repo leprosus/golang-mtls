@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"io"
 	"log/slog"
+	"mtls/pkg/ed25519/domain"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -35,22 +36,50 @@ func (n nullMux) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 func initMTLS(t *testing.T) (aliceMTLS, bobMTLS *mtls.MTLS) {
 	t.Helper()
 
-	alicePub, alicePriv, err := ed25519.GeneratePemBytesPair()
+	alicePub, alicePriv, err := ed25519.GenerateKeyPair()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	bobPub, bobPriv, err := ed25519.GeneratePemBytesPair()
+	var alicePubPEM domain.PEMBlock
+
+	alicePubPEM, err = alicePub.ToPEMBlock()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	aliceMTLS, err = mtls.NewMTLS(bobPub, alicePriv)
+	var alicePrivPEM domain.PEMBlock
+
+	alicePrivPEM, err = alicePriv.ToPEMBlock()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	bobMTLS, err = mtls.NewMTLS(alicePub, bobPriv)
+	bobPub, bobPriv, err := ed25519.GenerateKeyPair()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	var bobPubPEM domain.PEMBlock
+
+	bobPubPEM, err = bobPub.ToPEMBlock()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	var bobPrivPEM domain.PEMBlock
+
+	bobPrivPEM, err = bobPriv.ToPEMBlock()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	aliceMTLS, err = mtls.NewMTLS(bobPubPEM.ToBytes(), alicePrivPEM.ToBytes())
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	bobMTLS, err = mtls.NewMTLS(alicePubPEM.ToBytes(), bobPrivPEM.ToBytes())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -98,7 +127,14 @@ func TestMTLS(t *testing.T) {
 		_ = res.Body.Close()
 	}()
 
-	if original != string(bs) {
+	var decoded []byte
+
+	decoded, err = aliceMTLS.Decode(bs)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if original != string(decoded) {
 		t.Fatal("middleware works unwell")
 	}
 }
