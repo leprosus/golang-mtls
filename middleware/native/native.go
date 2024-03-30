@@ -6,10 +6,9 @@ import (
 	"log/slog"
 	"net/http"
 
-	"mtls/pkg/ed25519/domain"
-
 	"mtls/middleware"
 	"mtls/mtls"
+	"mtls/pkg/ed25519/domain"
 )
 
 type MTLS struct {

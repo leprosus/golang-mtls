@@ -24,6 +24,7 @@ linters:
     - nonamedreturns
     - wrapcheck
     - gofumpt
+    - gci
 
 linters-settings:
   gosec:

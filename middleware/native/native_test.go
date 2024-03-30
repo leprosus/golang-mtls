@@ -8,12 +8,11 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"mtls/pkg/ed25519/domain"
-
 	"mtls/middleware"
 	"mtls/middleware/native"
 	"mtls/mtls"
 	"mtls/pkg/ed25519"
+	"mtls/pkg/ed25519/domain"
 )
 
 type nullMux struct{}
@@ -145,6 +144,6 @@ func TestMTLS(t *testing.T) {
 	}
 
 	if mtlsHeader != bobMTLS.Sign() {
-		t.Fatalf("response contains %s headerthat are not equal to recieved", middleware.MTLSSignHeader)
+		t.Fatalf("response contains %s headerthat are not equal to received", middleware.MTLSSignHeader)
 	}
 }
