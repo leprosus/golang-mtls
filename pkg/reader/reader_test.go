@@ -2,11 +2,12 @@ package reader_test
 
 import (
 	"io"
+	"strings"
+	"testing"
+
 	"mtls/pkg/cipher"
 	"mtls/pkg/ed25519/domain"
 	"mtls/pkg/reader"
-	"strings"
-	"testing"
 )
 
 //nolint:gochecknoglobals
@@ -21,14 +22,14 @@ var (
 func TestReader_Read(t *testing.T) {
 	t.Parallel()
 
-	c, err := cipher.NewCipher(shared)
+	testCipher, err := cipher.NewCipher(shared)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	const original = "some text for test"
 
-	testReader := reader.NewReader(strings.NewReader(original), c)
+	testReader := reader.NewReader(strings.NewReader(original), testCipher)
 
 	var read []byte
 
@@ -39,7 +40,7 @@ func TestReader_Read(t *testing.T) {
 
 	var decoded []byte
 
-	decoded, err = c.Decode(read)
+	decoded, err = testCipher.Decode(read)
 	if err != nil {
 		t.Fatal(err)
 	}
