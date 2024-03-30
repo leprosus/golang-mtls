@@ -3,6 +3,7 @@ package native
 import (
 	"errors"
 	"log/slog"
+	"mtls/middleware"
 	"mtls/mtls"
 	"net/http"
 	"sync/atomic"
@@ -36,6 +37,8 @@ func (rw *responseWriter) Write(bs []byte) (num int, err error) {
 
 		return num, ErrDataHasBeenWritten
 	}
+
+	rw.Header().Add(middleware.MTLSSignHeader, rw.mtls.Sign())
 
 	var decoded []byte
 

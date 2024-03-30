@@ -137,4 +137,13 @@ func TestMTLS(t *testing.T) {
 	if original != string(decoded) {
 		t.Fatal("middleware works unwell")
 	}
+
+	mtlsHeader := res.Header.Get(middleware.MTLSSignHeader)
+	if mtlsHeader == "" {
+		t.Fatalf("response doesn't contain %s header", middleware.MTLSSignHeader)
+	}
+
+	if mtlsHeader != bobMTLS.Sign() {
+		t.Fatalf("response contains %s headerthat are not equal to recieved", middleware.MTLSSignHeader)
+	}
 }
