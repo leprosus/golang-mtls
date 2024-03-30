@@ -49,22 +49,22 @@ func main() {
 	    panic(err)	
     }
 	
-	const origin = "some text"
-	
-	var encoded []byte
-
+    const origin = "some text"
+    
+    var encoded []byte
+    
     encoded, err = c.Encode([]byte(origin))
-	if err != nil {
-		panic(err)
+    if err != nil {
+        panic(err)
     }
-	
-	var decoded []byte
-
-	decoded, err = c.Decode([]byte(encoded))
-	if err != nil {
-	    panic(err)	
+    
+    var decoded []byte
+    
+    decoded, err = c.Decode([]byte(encoded))
+    if err != nil {
+        panic(err)	
     }
-	
-	fmt.Println(string(decoded))
+    
+    fmt.Println(string(decoded))
 }
 ```

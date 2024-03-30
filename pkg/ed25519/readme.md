@@ -209,14 +209,14 @@ func main() {
     if err != nil {
         panic(err)
     }
-
-	var shared domain.SharedKey
-
-	shared, err = ed25519.GenerateSharedKey(pub, priv)
+    
+    var shared domain.SharedKey
+    
+    shared, err = ed25519.GenerateSharedKey(pub, priv)
     if err != nil {
         panic(err)
     }
-
+    
     fmt.Println(shared)
 }
 ```

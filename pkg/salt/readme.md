@@ -25,7 +25,7 @@ func main() {
 	    panic(err)	
     }
 	
-	const secret = "secret text"
+    const secret = "secret text"
 
     hashFn := sha512.New()
     hashFn.Write(secret)
@@ -33,6 +33,6 @@ func main() {
     hash := hashFn.Sum(nil)
     hashStr := hex.EncodeToString(hash)
 	
-	fmt.Println(hashStr)
+    fmt.Println(hashStr)
 }
 ```
