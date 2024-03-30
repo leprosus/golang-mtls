@@ -2,9 +2,10 @@ package ed25519_test
 
 import (
 	"bytes"
+	"testing"
+
 	"mtls/pkg/ed25519"
 	"mtls/pkg/ed25519/domain"
-	"testing"
 )
 
 func TestGenerateSharedKey(t *testing.T) {

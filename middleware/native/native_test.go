@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"io"
 	"log/slog"
-	"mtls/pkg/ed25519/domain"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"mtls/pkg/ed25519/domain"
 
 	"mtls/middleware"
 	"mtls/middleware/native"

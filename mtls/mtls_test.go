@@ -1,8 +1,9 @@
 package mtls_test
 
 import (
-	"mtls/pkg/ed25519/domain"
 	"testing"
+
+	"mtls/pkg/ed25519/domain"
 
 	"mtls/mtls"
 	"mtls/pkg/ed25519"

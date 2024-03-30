@@ -2,9 +2,10 @@ package domain_test
 
 import (
 	"bytes"
-	"mtls/pkg/ed25519/domain"
 	"strings"
 	"testing"
+
+	"mtls/pkg/ed25519/domain"
 )
 
 var (

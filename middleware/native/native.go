@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"io"
 	"log/slog"
-	"mtls/pkg/ed25519/domain"
 	"net/http"
+
+	"mtls/pkg/ed25519/domain"
 
 	"mtls/middleware"
 	"mtls/mtls"

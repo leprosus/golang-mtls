@@ -3,10 +3,11 @@ package native
 import (
 	"errors"
 	"log/slog"
-	"mtls/middleware"
-	"mtls/mtls"
 	"net/http"
 	"sync/atomic"
+
+	"mtls/middleware"
+	"mtls/mtls"
 )
 
 var ErrDataHasBeenWritten = errors.New("data has been written")

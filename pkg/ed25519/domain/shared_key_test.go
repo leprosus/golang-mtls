@@ -1,8 +1,9 @@
 package domain_test
 
 import (
-	"mtls/pkg/ed25519/domain"
 	"testing"
+
+	"mtls/pkg/ed25519/domain"
 )
 
 var (

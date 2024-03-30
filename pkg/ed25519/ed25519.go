@@ -3,6 +3,7 @@ package ed25519
 import (
 	"crypto/ed25519"
 	"crypto/rand"
+
 	"mtls/pkg/ed25519/domain"
 )
 

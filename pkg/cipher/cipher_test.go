@@ -1,8 +1,9 @@
 package cipher_test
 
 import (
-	"mtls/pkg/ed25519/domain"
 	"testing"
+
+	"mtls/pkg/ed25519/domain"
 
 	"mtls/pkg/cipher"
 	"mtls/pkg/ed25519"

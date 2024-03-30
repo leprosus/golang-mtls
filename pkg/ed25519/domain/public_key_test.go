@@ -3,9 +3,10 @@ package domain_test
 import (
 	"bytes"
 	"crypto/ed25519"
-	"mtls/pkg/ed25519/domain"
 	"reflect"
 	"testing"
+
+	"mtls/pkg/ed25519/domain"
 )
 
 var (
