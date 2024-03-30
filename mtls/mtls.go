@@ -11,7 +11,7 @@ type MTLS struct {
 	sign   string
 }
 
-func NewMTLS(pubPEMBs, privPEMBs []byte) (mtls *MTLS, err error) {
+func NewMTLSWithPemBlocks(pubPEMBs, privPEMBs []byte) (mtls *MTLS, err error) {
 	var pubPEM domain.PEMBlock
 
 	err = pubPEM.FromBytes(pubPEMBs)
@@ -47,6 +47,10 @@ func NewMTLS(pubPEMBs, privPEMBs []byte) (mtls *MTLS, err error) {
 		return mtls, err
 	}
 
+	return NewMTLSWithSharedKey(shared)
+}
+
+func NewMTLSWithSharedKey(shared domain.SharedKey) (mtls *MTLS, err error) {
 	mtls = &MTLS{}
 
 	mtls.cipher, err = cipher.NewCipher(shared)

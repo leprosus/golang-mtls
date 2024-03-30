@@ -53,14 +53,14 @@ func TestMTL(t *testing.T) {
 
 	var aliceMTLS *mtls.MTLS
 
-	aliceMTLS, err = mtls.NewMTLS(bobPub, alicePriv)
+	aliceMTLS, err = mtls.NewMTLSWithPemBlocks(bobPub, alicePriv)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	var bobMTLS *mtls.MTLS
 
-	bobMTLS, err = mtls.NewMTLS(alicePub, bobPriv)
+	bobMTLS, err = mtls.NewMTLSWithPemBlocks(alicePub, bobPriv)
 	if err != nil {
 		t.Fatal(err)
 	}

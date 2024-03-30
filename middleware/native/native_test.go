@@ -74,12 +74,12 @@ func initMTLS(t *testing.T) (aliceMTLS, bobMTLS *mtls.MTLS) {
 		t.Fatal(err)
 	}
 
-	aliceMTLS, err = mtls.NewMTLS(bobPubPEM.ToBytes(), alicePrivPEM.ToBytes())
+	aliceMTLS, err = mtls.NewMTLSWithPemBlocks(bobPubPEM.ToBytes(), alicePrivPEM.ToBytes())
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	bobMTLS, err = mtls.NewMTLS(alicePubPEM.ToBytes(), bobPrivPEM.ToBytes())
+	bobMTLS, err = mtls.NewMTLSWithPemBlocks(alicePubPEM.ToBytes(), bobPrivPEM.ToBytes())
 	if err != nil {
 		t.Fatal(err)
 	}

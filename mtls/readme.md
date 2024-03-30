@@ -13,10 +13,18 @@ mTLS (Mutual Transport Layer Security) - это способ обеспечен�
 ## Функции пакета
 
 ```golang
-func NewMTLS(pubPEMBs, privPEMBs []byte) (mtls *MTLS, err error)
+func NewMTLSWithPemBlocks(pubPEMBs, privPEMBs []byte) (mtls *MTLS, err error)
 ```
 
-Функция создаёт новый шифровальщик, преобразования которого будут зависеть от public и private ключей.
+Функция создаёт новый MTLS шифровальщик, преобразования которого будут зависеть от public и private ключей.
+
+```golang
+func NewMTLSWithSharedKey(shared domain.SharedKey) (mtls *MTLS, err error)
+```
+
+Функция создаёт новый MTLS шифровальщик, преобразования которого будут зависеть от секретного ключа.
+
+
 
 ## Структуры и их методы
 
@@ -58,7 +66,7 @@ func (m MTLS) Cipher() (cipher *cipher.Cipher)
 
 ```golang
 func main() {
-    mtls, err := NewMTLS(pubPEMBs, privPEMBs)
+    mtls, err := NewMTLSWithPemBlocks(pubPEMBs, privPEMBs)
     if err != nil {
         panic(err)
     }
