@@ -4,7 +4,7 @@ import (
 	"crypto/ed25519"
 	"crypto/rand"
 
-	"mtls/pkg/ed25519/domain"
+	"github.com/leprosus/golang-mtls/pkg/ed25519/domain"
 )
 
 func GenerateKeyPair() (pub domain.PublicKey, priv domain.PrivateKey, err error) {

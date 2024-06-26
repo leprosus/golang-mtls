@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"testing"
 
-	"mtls/pkg/ed25519"
-	"mtls/pkg/ed25519/domain"
+	"github.com/leprosus/golang-mtls/pkg/ed25519"
+	"github.com/leprosus/golang-mtls/pkg/ed25519/domain"
 )
 
 func TestGenerateSharedKey(t *testing.T) {
