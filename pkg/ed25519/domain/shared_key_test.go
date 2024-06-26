@@ -3,7 +3,7 @@ package domain_test
 import (
 	"testing"
 
-	"mtls/pkg/ed25519/domain"
+	"github.com/leprosus/golang-mtls/pkg/ed25519/domain"
 )
 
 //nolint:gochecknoglobals

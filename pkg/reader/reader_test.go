@@ -5,9 +5,9 @@ import (
 	"strings"
 	"testing"
 
-	"mtls/pkg/cipher"
-	"mtls/pkg/ed25519/domain"
-	"mtls/pkg/reader"
+	"github.com/leprosus/golang-mtls/pkg/cipher"
+	"github.com/leprosus/golang-mtls/pkg/ed25519/domain"
+	"github.com/leprosus/golang-mtls/pkg/reader"
 )
 
 //nolint:gochecknoglobals

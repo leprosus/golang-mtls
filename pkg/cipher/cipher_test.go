@@ -3,10 +3,10 @@ package cipher_test
 import (
 	"testing"
 
-	"mtls/pkg/ed25519/domain"
+	"github.com/leprosus/golang-mtls/pkg/ed25519/domain"
 
-	"mtls/pkg/cipher"
-	"mtls/pkg/ed25519"
+	"github.com/leprosus/golang-mtls/pkg/cipher"
+	"github.com/leprosus/golang-mtls/pkg/ed25519"
 )
 
 func provideCipher() (c *cipher.Cipher, err error) {

@@ -3,7 +3,7 @@ package ed25519_test
 import (
 	"testing"
 
-	"mtls/pkg/ed25519"
+	"github.com/leprosus/golang-mtls/pkg/ed25519"
 )
 
 func TestGenerateKeyPair(t *testing.T) {

@@ -3,7 +3,7 @@ package reader
 import (
 	"io"
 
-	"mtls/pkg/cipher"
+	"github.com/leprosus/golang-mtls/pkg/cipher"
 )
 
 type Reader struct {

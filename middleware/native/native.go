@@ -6,9 +6,9 @@ import (
 	"log/slog"
 	"net/http"
 
-	"mtls/middleware"
-	"mtls/mtls"
-	"mtls/pkg/ed25519/domain"
+	"github.com/leprosus/golang-mtls/middleware"
+	"github.com/leprosus/golang-mtls/mtls"
+	"github.com/leprosus/golang-mtls/pkg/ed25519/domain"
 )
 
 type MTLS struct {

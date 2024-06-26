@@ -3,7 +3,7 @@ package salt_test
 import (
 	"testing"
 
-	"mtls/pkg/salt"
+	"github.com/leprosus/golang-mtls/pkg/salt"
 )
 
 func TestGenerateSalt(t *testing.T) {

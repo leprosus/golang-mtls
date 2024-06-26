@@ -1,7 +1,7 @@
 package ed25519
 
 import (
-	"mtls/pkg/ed25519/domain"
+	"github.com/leprosus/golang-mtls/pkg/ed25519/domain"
 
 	"golang.org/x/crypto/curve25519"
 )

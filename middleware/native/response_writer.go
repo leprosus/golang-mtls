@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"sync/atomic"
 
-	"mtls/middleware"
-	"mtls/mtls"
+	"github.com/leprosus/golang-mtls/middleware"
+	"github.com/leprosus/golang-mtls/mtls"
 )
 
 var ErrDataHasBeenWritten = errors.New("data has been written")

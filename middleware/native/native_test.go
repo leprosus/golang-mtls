@@ -8,11 +8,11 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"mtls/middleware"
-	"mtls/middleware/native"
-	"mtls/mtls"
-	"mtls/pkg/ed25519"
-	"mtls/pkg/ed25519/domain"
+	"github.com/leprosus/golang-mtls/middleware"
+	"github.com/leprosus/golang-mtls/middleware/native"
+	"github.com/leprosus/golang-mtls/mtls"
+	"github.com/leprosus/golang-mtls/pkg/ed25519"
+	"github.com/leprosus/golang-mtls/pkg/ed25519/domain"
 )
 
 type nullMux struct{}
