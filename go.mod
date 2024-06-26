@@ -1,4 +1,4 @@
-module github.com/leprosus/golang-mtlc
+module github.com/leprosus/golang-mtls
 
 go 1.22.0
 
