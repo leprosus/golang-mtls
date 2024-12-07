@@ -3,10 +3,10 @@ package mtls_test
 import (
 	"testing"
 
-	"github.com/leprosus/golang-mtls/pkg/ed25519/domain"
+	"github.com/leprosus/golang-crypto/ed25519/domain"
 
+	"github.com/leprosus/golang-crypto/ed25519"
 	"github.com/leprosus/golang-mtls/mtls"
-	"github.com/leprosus/golang-mtls/pkg/ed25519"
 )
 
 func generatePEMPair() (pubPEMBs, privPEMBs []byte, err error) {

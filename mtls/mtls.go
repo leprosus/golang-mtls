@@ -1,9 +1,9 @@
 package mtls
 
 import (
-	"github.com/leprosus/golang-mtls/pkg/cipher"
-	mtlsEd25519 "github.com/leprosus/golang-mtls/pkg/ed25519"
-	"github.com/leprosus/golang-mtls/pkg/ed25519/domain"
+	"github.com/leprosus/golang-crypto/cipher"
+	mtlsEd25519 "github.com/leprosus/golang-crypto/ed25519"
+	"github.com/leprosus/golang-crypto/ed25519/domain"
 )
 
 type MTLS struct {
